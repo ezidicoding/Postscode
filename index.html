@@ -17,45 +17,17 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-.post-box h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.post-box input, .post-box textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 15px;
-}
-.post-box button {
-  width: 100%;
-  padding: 14px;
-  background: #4CAF50;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.post-box button:hover {
-  background: #45a049;
-}
-#result {
-  margin-top: 15px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  color: green;
-}
 </style>
 </head>
+
 <body>
+
+<!-- iframe مخفي للإرسال -->
+<iframe name="hiddenFrame" style="display:none;"></iframe>
 
 <div class="post-box">
   <h2>إرسال مقالة للنشر</h2>
+
   <form id="guestPostForm">
     <input type="text" id="title" placeholder="عنوان المقال" required>
     <input type="text" id="author" placeholder="اسم الكاتب (اختياري)">
@@ -73,18 +45,17 @@ document.getElementById("guestPostForm").addEventListener("submit", function(e){
   const author = document.getElementById("author").value;
   const content = document.getElementById("content").value;
 
-  // تحقق من أن المستخدم ملأ الحقول المطلوبة
   if(!title || !content){
     alert("يرجى ملء الحقول المطلوبة");
     return;
   }
 
-  // استخدام FormSubmit لإرسال البريد
+  // إنشاء نموذج الإرسال داخل iframe
   const form = document.createElement("form");
-  form.action = "https://formsubmit.co/send.shamo.post2025@blogger.com"; // بريد Blogger السري
+  form.action = "https://formsubmit.co/send.shamo.post2025@blogger.com";
   form.method = "POST";
+  form.target = "hiddenFrame";  // إرسال داخل الإطار المخفي
 
-  // حقول مخفية
   const fields = {
     _subject: "مقال جديد من النموذج",
     _captcha: "false",
@@ -92,10 +63,10 @@ document.getElementById("guestPostForm").addEventListener("submit", function(e){
     العنوان: title,
     الكاتب: author,
     المحتوى: content,
-    _next: "https://eclrsg.blogspot.com/?m=1" // إعادة توجيه بعد الإرسال
+    _next: "https://eclrsg.blogspot.com/?m=1"
   };
 
-  for(let name in fields){
+  for (let name in fields){
     const input = document.createElement("input");
     input.type = "hidden";
     input.name = name;
@@ -106,8 +77,8 @@ document.getElementById("guestPostForm").addEventListener("submit", function(e){
   document.body.appendChild(form);
   form.submit();
 
-  // رسالة نجاح فورية
-  document.getElementById("result").textContent = "✓ جاري إرسال المقال...";
+  // رسالة نجاح دون انتقال المستخدم
+  document.getElementById("result").textContent = "✓ تم إرسال المقال بنجاح دون مغادرة الصفحة";
 });
 </script>
 
