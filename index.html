@@ -50,11 +50,10 @@ document.getElementById("guestPostForm").addEventListener("submit", function(e){
     return;
   }
 
-  // إنشاء نموذج الإرسال داخل iframe
   const form = document.createElement("form");
   form.action = "https://formsubmit.co/send.shamo.post2025@blogger.com";
   form.method = "POST";
-  form.target = "hiddenFrame";  // إرسال داخل الإطار المخفي
+  form.target = "hiddenFrame";   // ← أهم خطوة!
 
   const fields = {
     _subject: "مقال جديد من النموذج",
@@ -63,7 +62,7 @@ document.getElementById("guestPostForm").addEventListener("submit", function(e){
     العنوان: title,
     الكاتب: author,
     المحتوى: content,
-    _next: "https://eclrsg.blogspot.com/?m=1"
+    _next: "https://eclrsg.blogspot.com/?m=1"  // لن يتم فتحها؛ لأننا نستخدم iframe
   };
 
   for (let name in fields){
@@ -77,10 +76,7 @@ document.getElementById("guestPostForm").addEventListener("submit", function(e){
   document.body.appendChild(form);
   form.submit();
 
-  // رسالة نجاح دون انتقال المستخدم
+  // رسالة نجاح على نفس الصفحة
   document.getElementById("result").textContent = "✓ تم إرسال المقال بنجاح دون مغادرة الصفحة";
 });
 </script>
-
-</body>
-</html>
