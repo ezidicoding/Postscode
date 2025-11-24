@@ -2,15 +2,114 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>إرسال مقالة</title>
+<title>إرسال مقالة للنشر</title>
+<style>
+body {
+  font-family: Tahoma, sans-serif;
+  background: #f2f2f2;
+  padding: 20px;
+}
+.post-box {
+  max-width: 650px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.post-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.post-box input, .post-box textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+.post-box button {
+  width: 100%;
+  padding: 14px;
+  background: #4CAF50;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.post-box button:hover {
+  background: #45a049;
+}
+#result {
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: green;
+}
+</style>
 </head>
 <body>
-<h2>إرسال مقالة للنشر</h2>
-<form action="/submit" method="POST">
-  <input type="text" name="title" placeholder="عنوان المقال" required><br><br>
-  <input type="text" name="author" placeholder="اسم الكاتب (اختياري)"><br><br>
-  <textarea name="content" rows="8" placeholder="اكتب المقال هنا..." required></textarea><br><br>
-  <button type="submit">إرسال المقال</button>
-</form>
+
+<div class="post-box">
+  <h2>إرسال مقالة للنشر</h2>
+  <form id="guestPostForm">
+    <input type="text" id="title" placeholder="عنوان المقال" required>
+    <input type="text" id="author" placeholder="اسم الكاتب (اختياري)">
+    <textarea id="content" rows="8" placeholder="اكتب المقال هنا..." required></textarea>
+    <button type="submit">إرسال المقال</button>
+    <div id="result"></div>
+  </form>
+</div>
+
+<script>
+document.getElementById("guestPostForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const title = document.getElementById("title").value;
+  const author = document.getElementById("author").value;
+  const content = document.getElementById("content").value;
+
+  // تحقق من أن المستخدم ملأ الحقول المطلوبة
+  if(!title || !content){
+    alert("يرجى ملء الحقول المطلوبة");
+    return;
+  }
+
+  // استخدام FormSubmit لإرسال البريد
+  const form = document.createElement("form");
+  form.action = "https://formsubmit.co/send.shamo.post2025@blogger.com"; // بريد Blogger السري
+  form.method = "POST";
+
+  // حقول مخفية
+  const fields = {
+    _subject: "مقال جديد من النموذج",
+    _captcha: "false",
+    _template: "table",
+    العنوان: title,
+    الكاتب: author,
+    المحتوى: content,
+    _next: "https://eclrsg.blogspot.com/?m=1" // إعادة توجيه بعد الإرسال
+  };
+
+  for(let name in fields){
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = fields[name];
+    form.appendChild(input);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+
+  // رسالة نجاح فورية
+  document.getElementById("result").textContent = "✓ جاري إرسال المقال...";
+});
+</script>
+
 </body>
 </html>
