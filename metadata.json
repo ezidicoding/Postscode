@@ -1,0 +1,7 @@
+{
+  "name": "GoTranslate",
+  "description": "A powerful and beautiful translation application powered by Gemini. Translate text and voice between many languages, including specialized Kurdish dialects.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
